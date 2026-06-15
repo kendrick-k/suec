@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kendrick-k/suec/blob/main/schemas/suec-event.schema.json",
+  "title": "SUEC Event",
+  "description": "SignalsKit Usage Event Convention event envelope.",
+  "type": "object",
+  "required": ["event_name"],
+  "additionalProperties": false,
+  "properties": {
+    "event_name": {
+      "type": "string",
+      "description": "Lowercase snake_case event name, preferably object_action or vertical_object_action.",
+      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$",
+      "examples": [
+        "document_edited",
+        "project_created",
+        "integration_connected",
+        "textile_pattern_exported"
+      ]
+    },
+    "event_properties": {
+      "type": "object",
+      "description": "Safe operational event properties. Do not include PII.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          { "type": "string", "maxLength": 500 },
+          { "type": "number" },
+          { "type": "integer" },
+          { "type": "boolean" },
+          { "type": "null" }
+        ]
+      },
+      "examples": [
+        {
+          "object_id": "doc_123",
+          "source": "editor_toolbar",
+          "export_format": "pdf"
+        }
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional ISO 8601 timestamp if the sender controls event time."
+    },
+    "anonymous_id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Optional non-PII anonymous user or visitor ID."
+    }
+  }
+}
