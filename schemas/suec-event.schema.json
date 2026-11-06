@@ -4,33 +4,50 @@
   "title": "SUEC Event",
   "description": "SignalsKit Usage Event Convention event envelope.",
   "type": "object",
-  "required": ["event_name"],
+  "required": [
+    "event_name"
+  ],
   "additionalProperties": false,
   "properties": {
     "event_name": {
       "type": "string",
-      "description": "Lowercase snake_case event name, preferably object_action or vertical_object_action.",
-      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$",
+      "description": "Lowercase snake_case event name, preferably object_action or vertical_object_action. Dotted namespaces are reserved for external/server metric events.",
+      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$|^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$",
       "examples": [
         "document_edited",
         "project_created",
         "integration_connected",
-        "textile_pattern_exported"
+        "textile_pattern_exported",
+        "platform.account.metrics_snapshot"
       ]
     },
     "event_properties": {
       "type": "object",
       "description": "Safe operational event properties. Do not include PII.",
       "propertyNames": {
-        "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$"
+        "pattern": "^_?[a-z][a-z0-9]*(?:_[a-z0-9]+)*$"
       },
       "additionalProperties": {
         "anyOf": [
-          { "type": "string", "maxLength": 500 },
-          { "type": "number" },
-          { "type": "integer" },
-          { "type": "boolean" },
-          { "type": "null" }
+          {
+            "type": "string",
+            "maxLength": 500
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "object"
+          }
         ]
       },
       "examples": [
@@ -39,7 +56,13 @@
           "source": "editor_toolbar",
           "export_format": "pdf"
         }
-      ]
+      ],
+      "properties": {
+        "_signalskit": {
+          "type": "object",
+          "description": "Internal markers such as admin_visitor, admin_context and admin_marker_source. Never include identity or secrets."
+        }
+      }
     },
     "timestamp": {
       "type": "string",
@@ -50,6 +73,21 @@
       "type": "string",
       "maxLength": 128,
       "description": "Optional non-PII anonymous user or visitor ID."
+    },
+    "user_id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Optional app-scoped pseudonymous authenticated user ID (for example app_user_<hash>). Never an email, raw database ID or auth-provider ID."
+    },
+    "session_id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Optional session ID, kept across login to link anonymous and authenticated activity."
+    },
+    "idempotency_key": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Optional key to deduplicate server-side snapshot events."
     }
   }
 }

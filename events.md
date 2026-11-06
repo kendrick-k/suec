@@ -26,6 +26,31 @@ crm_pipeline_created
 ai_assistant_connected
 ```
 
+## Demo
+
+Public or in-app product demos.
+
+```text
+demo_entered
+demo_guide_started
+demo_coach_started
+demo_coach_step_viewed
+demo_coach_completed
+demo_exited
+```
+
+## Onboarding
+
+Guided setup flows. Put the flow in `funnel` and the position in `step_id` / `step_index`.
+
+```text
+onboarding_started
+onboarding_step_viewed
+onboarding_step_completed
+onboarding_completed
+onboarding_skipped
+```
+
 ## Engagement
 
 Repeated product usage.
@@ -70,6 +95,52 @@ Domain examples:
 textile_pattern_exported
 invoice_exported
 campaign_published
+```
+
+## Feedback And Handoff
+
+Qualitative signals and requests for human follow-up.
+
+```text
+feedback_submitted
+survey_submitted
+satisfaction_submitted
+nps_submitted
+support_need_selected
+customer_contact_requested
+```
+
+## Commercial Intent
+
+Buying signals before revenue.
+
+```text
+pricing_viewed
+pricing_plan_selected
+checkout_started
+demo_requested
+sales_contact_started
+```
+
+## Authentication
+
+Links anonymous activity to a logged-in user. See [properties.md](properties.md#authenticated-user-linking).
+
+```text
+user_authenticated
+session_authenticated
+account_connected
+```
+
+## External Metrics
+
+Server-side snapshots from upstream sources. These are the only SUEC events that use dotted namespaces.
+
+```text
+youtube.video.metrics_snapshot
+youtube.video.view_delta
+campaign.external_metric_snapshot
+platform.account.metrics_snapshot
 ```
 
 ## Collaboration

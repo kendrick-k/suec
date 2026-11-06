@@ -8,7 +8,7 @@ SUEC is not a replacement for ecommerce conventions such as `add_to_cart`, `begi
 
 ## Status
 
-Version: `0.1.0`
+Version: `0.2.0`
 
 This is an early public convention. It is designed to be practical, stable, and easy to implement. Feedback and field examples should refine the vocabulary before a `1.0.0` release.
 
@@ -49,14 +49,18 @@ signalsKit.track('document_123_edited_from_toolbar')
 
 ## Event Categories
 
-SUEC groups product events into six operational categories:
+SUEC groups product events into operational categories:
 
 - Activation: first setup or first value moment.
+- Demo and onboarding: guided demos and setup flows.
 - Engagement: repeated product usage.
 - Output: exported, published, shared, or generated value.
 - Collaboration: team or multiplayer activity.
+- Feedback and handoff: satisfaction, NPS, support and contact requests.
+- Commercial intent: pricing, plan selection, demo and sales requests.
 - Friction: blocked, failed, denied, or limited intent.
 - Revenue: checkout, purchase, trial, subscription lifecycle.
+- External metrics: server-side snapshots (dotted names such as `platform.account.metrics_snapshot`).
 
 See [events.md](events.md) for canonical event names.
 
@@ -77,7 +81,7 @@ Recommended properties include `object_id`, `object_type`, `source`, `method`, `
 
 Never send PII such as email, name, phone, street address, raw IP, or full free-text form values.
 
-See [properties.md](properties.md).
+See [properties.md](properties.md), including authenticated user linking, internal/admin visitor markers and external metric snapshots.
 
 ## Implementation Prompt
 
